@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import './App.css';
+import { userAction } from './actions/userAction';
+import { connect } from 'react-redux';
+
+
+
+
+
+function App(props) {
+  console.log('====================================');
+  console.log(props);
+  console.log('====================================');
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{props.userName}</h1>
+      <button onClick= {() => {props.changeName('welcome')}}>change</button>
     </div>
   );
 }
 
-export default App;
+//retrive data
+const mapStateToPorps = state =>{
+  return{
+    userName: state.name
+  }
+}
+
+//insert data
+const mapDispatchToPorps = dispatch =>{
+  
+  return{
+    changeName:(name) => {dispatch(userAction(name))}
+    
+  }
+} 
+
+export default connect(mapStateToPorps,mapDispatchToPorps)(App);
